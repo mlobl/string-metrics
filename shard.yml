@@ -1,0 +1,9 @@
+name: string-metrics
+version: 0.1.0
+
+authors:
+  - Meyer Lobl <meyer@meyerlobl.com>
+
+crystal: 0.24.1
+
+license: MIT
