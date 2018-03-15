@@ -88,4 +88,57 @@ module StringMetrics
     score[s1.size + 1][s2.size + 1]
   end
 
+  # ### Jaro distance/similarity
+  # A measure of similarity between two strings based on matching characters
+  # Based off https://rosettacode.org/wiki/Jaro_distance#Python
+  def self.jaro(s1 : String, s2 : String)
+    s1_size = s1.size
+    s2_size = s2.size
+    return 1 if [s1_size, s2_size].all? { |i| i == 0 }
+
+    match_distance = {s1_size, s2_size}.max / 2 - 1
+
+    s1_matches = [false] * s1_size
+    s2_matches = [false] * s2_size
+
+    matches = 0
+    transpositions = 0
+    s1_chars = s1.chars
+    s2_chars = s2.chars
+
+    (0...s1_size).each do |i|
+      start =  {i - match_distance, 0}.max
+      ending = {i + match_distance + 1, s2_size}.min
+
+      (start...ending).each do |j|
+        next if s2_matches[j]
+        next if s1_chars[i] != s2_chars[j]
+        s1_matches[i] = true
+        s2_matches[j] = true
+        matches += 1
+        break
+      end
+    end
+
+    return 0 if matches == 0
+
+    k = 0
+    (0...s1_size).each do |i|
+      next if !s1_matches[i]
+
+      while !s2_matches[k]
+        k += 1
+      end
+
+      if s1_chars[i] != s2_chars[k]
+        transpositions += 1
+      end
+      k += 1
+    end
+    ((matches.fdiv s1_size) + (matches.fdiv s2_size) + ((matches - transpositions.fdiv 2 ).fdiv matches)).fdiv 3
+  end
+
+
 end
+
+

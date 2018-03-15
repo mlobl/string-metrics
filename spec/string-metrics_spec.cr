@@ -57,4 +57,18 @@ describe "StringMetrics" do
   it "empty strings damerau" do
     StringMetrics.damerau_levenshtein("", "").should eq(0)
   end
+
+  it "jaro basic test" do
+    StringMetrics.jaro("MARTHA", "MARHTA").round(2).should eq(0.94)
+    StringMetrics.jaro("DIXON", "DICKSONX").round(2).should eq(0.77)
+    StringMetrics.jaro("JELLYFISH", "SMELLYFISH").round(2).should eq(0.90)
+  end
+
+  it "jaro one empty" do
+    StringMetrics.jaro("", "MARHTA").should eq(0)
+  end
+
+  it "jaro both empty" do
+    StringMetrics.jaro("", "").should eq(1)
+  end
 end
