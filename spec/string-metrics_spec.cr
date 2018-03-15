@@ -71,4 +71,18 @@ describe "StringMetrics" do
   it "jaro both empty" do
     StringMetrics.jaro("", "").should eq(1)
   end
+
+  it "jaro winkler basic test" do
+    StringMetrics.jaro_winkler("MARTHA", "MARHTA").round(2).should eq(0.96)
+    StringMetrics.jaro_winkler("DIXON", "DICKSONX").round(2).should eq(0.81)
+  end
+
+  it "jaro winkler one empty" do
+    StringMetrics.jaro_winkler("", "MARHTA").should eq(0)
+  end
+
+  it "jaro winkler both empty" do
+    StringMetrics.jaro_winkler("", "").should eq(1)
+  end
+
 end

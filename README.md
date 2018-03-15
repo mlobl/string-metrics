@@ -1,9 +1,11 @@
 # string-metrics
 
-Ports some popular string algorithms for Crystal:
+String metrics and phonetic algorithms for Crystal:
 * [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance)
 * [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance)
 * [Damerau–Levenshtein distance](https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance)
+* [Jaro(-Winkler) Distance](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance)
+
 
 ## Installation
 

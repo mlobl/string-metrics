@@ -88,15 +88,14 @@ module StringMetrics
     score[s1.size + 1][s2.size + 1]
   end
 
-  # ### Jaro distance/similarity
-  # A measure of similarity between two strings based on matching characters
-  # Based off https://rosettacode.org/wiki/Jaro_distance#Python
-  def self.jaro(s1 : String, s2 : String)
+  # Based off https://rosettacode.org/wiki/Jaro_distance#Python and
+  # https://github.com/jamesturk/jellyfish/blob/master/jellyfish/_jellyfish.py
+  private def self.reused_jaro_winkler(s1 : String, s2 : String, winkler = true, scaling_factor = 0.1)
     s1_size = s1.size
     s2_size = s2.size
     return 1 if [s1_size, s2_size].all? { |i| i == 0 }
-
-    match_distance = {s1_size, s2_size}.max / 2 - 1
+    max_len = {s1_size, s2_size}.max
+    match_distance = max_len / 2 - 1
 
     s1_matches = [false] * s1_size
     s2_matches = [false] * s2_size
@@ -135,10 +134,34 @@ module StringMetrics
       end
       k += 1
     end
-    ((matches.fdiv s1_size) + (matches.fdiv s2_size) + ((matches - transpositions.fdiv 2 ).fdiv matches)).fdiv 3
+    weight = ((matches.fdiv s1_size) + (matches.fdiv s2_size) + ((matches - transpositions.fdiv 2 ).fdiv matches)).fdiv 3
+
+    if winkler && weight > 0.7 && s1_size > 3 && s2_size > 3
+      j = {max_len, 4}.min
+      i = 0
+      while i < j && s1_chars[i] == s2_chars[i]
+        i += 1
+      end
+      if i > 0
+        weight += i * scaling_factor * (1.0 - weight)
+      end
+    end
+    weight
+  end
+
+  # ### Jaro distance
+  # A measure of similarity between two strings based on matching characters.
+  # 0 is no similarity while 1 is an exact match
+  def self.jaro(s1 : String, s2 : String)
+    reused_jaro_winkler(s1, s2, false)
+  end
+
+  # ### Jaro Winkler distance
+  # Similar to regular Jaro, but gives a higher score for matching from the beginning
+  # of the string.
+  def self.jaro_winkler(s1 : String, s2 : String, scaling_factor = 0.1)
+    reused_jaro_winkler(s1, s2, scaling_factor: scaling_factor)
   end
 
 
 end
-
-
