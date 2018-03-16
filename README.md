@@ -1,5 +1,8 @@
 # string-metrics
 
+[![Build Status](https://travis-ci.org/mlobl/string-metrics.svg?branch=master)](https://travis-ci.org/mlobl/string-metrics)
+
+
 String metric algorithms for Crystal:
 * [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance)
 * [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance)
