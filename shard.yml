@@ -4,7 +4,7 @@ version: 0.1.0
 authors:
   - Meyer Lobl <meyer@meyerlobl.com>
 
-description: String metric algorithm implementations for Crystal. Keywords: Levenshtein, Hamming, Damerau–Levenshtein, Jaro, Jaro-Winkler
+description: String metric algorithm implementations for Crystal. Keywords are Levenshtein, Hamming, Damerau–Levenshtein, Jaro, Jaro-Winkler
 
 crystal: 0.24.1
 
