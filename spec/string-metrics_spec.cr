@@ -45,7 +45,7 @@ describe "StringMetrics" do
   end
 
   it "hamming with differing length strings" do
-    expect_raises ArgumentError, do
+    expect_raises ArgumentError do
       StringMetrics.hamming("", "check")
     end
   end
@@ -84,5 +84,4 @@ describe "StringMetrics" do
   it "jaro winkler both empty" do
     StringMetrics.jaro_winkler("", "").should eq(1)
   end
-
 end
