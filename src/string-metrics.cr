@@ -1,11 +1,15 @@
 require "./string-metrics/*"
 
-# TODO: Write documentation for `String::Metrics`
+# A module containing a collection of well known string metric algorithms
 module StringMetrics
-
-  # Gets the min edit distance between two strings.
-  # See https://en.wikipedia.org/wiki/Levenshtein_distance
-  # Ported from https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python
+  # Returns the min edit distance between two strings. If the strings are exactly the same it will return 0,
+  # but if they differ it will return the minimum number of insertions, deletions, or substitutions to make them exactly the same.
+  # ```crystal
+  # StringMetrics.levenshtein("Car", "Char") == 1
+  # ```
+  # More detail can be found [here](https://en.wikipedia.org/wiki/Levenshtein_distance).
+  # 
+  # Ported from [here](https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python)
   def self.levenshtein(s1 : String, s2 : String) : Int
     return levenshtein(s2, s1) if s1.size < s2.size
     return s1.size if s2.size == 0
@@ -22,7 +26,7 @@ module StringMetrics
         insertions = previous_row.unsafe_at(j + 1) + 1
         deletions = current_row.unsafe_at(j) + 1
         substitutions = previous_row.unsafe_at(j)
-        substitutions +=  1 if c1 != c2
+        substitutions += 1 if c1 != c2
         # could have minned a tuple, but this is a bit faster
         min = insertions
         min = deletions if deletions < min
@@ -35,27 +39,35 @@ module StringMetrics
     previous_row.last
   end
 
+  # Returns the number of substitutions that exist between two strings of equal length.
+  # Will raise an ArgumentError if both parameters aren't of the same length  
+  # ```crystal
+  # StringMetrics.hamming("Micro", "Macro") == 1
+  # ```
   def self.hamming(s1 : String, s2 : String) : Int
     raise ArgumentError.new("input lengths are not equal") if s1.size != s2.size
-    (0...s2.size).sum { |i| (s1[i] != s2[i])? 1 : 0 }
+    (0...s2.size).sum { |i| (s1[i] != s2[i]) ? 1 : 0 }
   end
 
   # A variation of the Levenshtein distance, this counts transpositions as a single edit.
-  # ```damerau_levenshtein("char", "hcar") == 1``` as opposed to a distance of 2 from levenshtein
-  # on it's own
-  # Ported from https://github.com/jamesturk/jellyfish/blob/master/jellyfish/_jellyfish.py
+  # ```
+  # StringMetrics.damerau_levenshtein("char", "hcar") == 1
+  # ``` 
+  # as opposed to a distance of 2 from levenshtein on it's own
+  # 
+  # Ported from [here](https://github.com/jamesturk/jellyfish/blob/master/jellyfish/_jellyfish.py)
   def self.damerau_levenshtein(s1 : String, s2 : String) : Int
     infinite = s1.size + s2.size
 
-    da = Hash(Char, Int32).new(default_value=0)
+    da = Hash(Char, Int32).new(default_value = 0)
 
     # distance matrix
-    score = (0...s1.size + 2).to_a.map {|i| [0]*(s2.size + 2)}
+    score = (0...s1.size + 2).to_a.map { |i| [0]*(s2.size + 2) }
     score[0][0] = infinite
 
     (0...s1.size + 1).each do |i|
-       score[i + 1][0] = infinite
-       score[i + 1][1] = i
+      score[i + 1][0] = infinite
+      score[i + 1][1] = i
     end
     (0...s2.size + 1).each do |i|
       score[0][i + 1] = infinite
@@ -68,7 +80,7 @@ module StringMetrics
     (1..s1.size).each do |i|
       db = 0
       (1..s2.size).each do |j|
-        i1 = da[s2_chars[j-1]]
+        i1 = da[s2_chars[j - 1]]
         j1 = db
         cost = 1
         if s1_chars[i - 1] == s2_chars[j - 1]
@@ -78,9 +90,9 @@ module StringMetrics
 
         score[i + 1][j + 1] = {
           score[i][j] + cost,
-          score[i+1][j] + 1,
-          score[i][j+1] + 1,
-          score[i1][j1] + (i - i1 - 1) + 1 + (j - j1 - 1)
+          score[i + 1][j] + 1,
+          score[i][j + 1] + 1,
+          score[i1][j1] + (i - i1 - 1) + 1 + (j - j1 - 1),
         }.min
       end
       da[s1_chars[i - 1]] = i
@@ -106,7 +118,7 @@ module StringMetrics
     s2_chars = s2.chars
 
     (0...s1_size).each do |i|
-      start =  {i - match_distance, 0}.max
+      start = {i - match_distance, 0}.max
       ending = {i + match_distance + 1, s2_size}.min
 
       (start...ending).each do |j|
@@ -134,7 +146,7 @@ module StringMetrics
       end
       k += 1
     end
-    weight = ((matches.fdiv s1_size) + (matches.fdiv s2_size) + ((matches - transpositions.fdiv 2 ).fdiv matches)).fdiv 3
+    weight = ((matches.fdiv s1_size) + (matches.fdiv s2_size) + ((matches - transpositions.fdiv 2).fdiv matches)).fdiv 3
 
     if winkler && weight > 0.7 && s1_size > 3 && s2_size > 3
       j = {max_len, 4}.min
@@ -149,19 +161,21 @@ module StringMetrics
     weight
   end
 
-  # ### Jaro distance
   # A measure of similarity between two strings based on matching characters.
-  # 0 is no similarity while 1 is an exact match
+  # Returns 0 if there is no similarity while 1 is an exact match
+  # ```crystal
+  #  StringMetrics.jaro("MARTHA", "MARHTA").round(2) == 0.94
+  # ```
   def self.jaro(s1 : String, s2 : String)
     reused_jaro_winkler(s1, s2, false)
   end
 
-  # ### Jaro Winkler distance
   # Similar to regular Jaro, but gives a higher score for matching from the beginning
-  # of the string.
+  # of the string. Only change the scaling factor if you're intimate with the algorithm.
+  # ```crystal
+  # StringMetrics.jaro_winkler("MARTHA", "MARHTA").round(2) == 0.96
+  # ```
   def self.jaro_winkler(s1 : String, s2 : String, scaling_factor = 0.1)
     reused_jaro_winkler(s1, s2, scaling_factor: scaling_factor)
   end
-
-
 end
