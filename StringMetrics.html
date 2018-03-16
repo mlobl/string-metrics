@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta id="repository-name" content="github.com/mlobl/string-metrics">
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="js/doc.js"></script>
+  <title>StringMetrics - github.com/mlobl/string-metrics</title>
+</head>
+<body>
+
+<div id="types-list">
+  <div id="search-box">
+    <input type="search" id="search-input" placeholder="Search...">
+  </div>
+
+  <ul>
+    <li><a href="index.html">README</a></li>
+  </ul>
+
+  <ul>
+  
+  <li class=" current" data-id="github.com/mlobl/string-metrics/StringMetrics" data-name="stringmetrics">
+      <a href="StringMetrics.html">StringMetrics</a>
+      
+    </li>
+  
+</ul>
+
+</div>
+
+<div id="main-content">
+<h1 class="type-name">
+
+  <span class="kind">module</span> StringMetrics
+
+</h1>
+
+
+
+
+
+  <h2>Overview</h2>
+
+  <p>A module containing a collection of well known string metric algorithms</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/mlobl/string-metrics/blob/c7cf5d71b4b6d37fc657381a7242553208354ade/src/string-metrics/version.cr#L1" target="_blank">string-metrics/version.cr</a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/mlobl/string-metrics/blob/c7cf5d71b4b6d37fc657381a7242553208354ade/src/string-metrics.cr#L4" target="_blank">string-metrics.cr</a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>Constant Summary</h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="VERSION">
+        <strong>VERSION</strong> = <code><span class="s">&quot;0.1.0&quot;</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+
+
+  <h2>Class Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#damerau_levenshtein%28s1%3AString%2Cs2%3AString%29%3AInt-class-method" class="signature"><strong>.damerau_levenshtein</strong>(s1 : String, s2 : String) : Int</a>
+        
+          <div class="summary"><p>A variation of the Levenshtein distance, this counts transpositions as a single edit.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hamming%28s1%3AString%2Cs2%3AString%29%3AInt-class-method" class="signature"><strong>.hamming</strong>(s1 : String, s2 : String) : Int</a>
+        
+          <div class="summary"><p>Returns the number of substitutions that exist between two strings of equal length.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#jaro%28s1%3AString%2Cs2%3AString%29-class-method" class="signature"><strong>.jaro</strong>(s1 : String, s2 : String)</a>
+        
+          <div class="summary"><p>A measure of similarity between two strings based on matching characters.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#jaro_winkler%28s1%3AString%2Cs2%3AString%2Cscaling_factor%3D0.1%29-class-method" class="signature"><strong>.jaro_winkler</strong>(s1 : String, s2 : String, scaling_factor = <span class="n">0.1</span>)</a>
+        
+          <div class="summary"><p>Similar to regular Jaro, but gives a higher score for matching from the beginning of the string.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#levenshtein%28s1%3AString%2Cs2%3AString%29%3AInt-class-method" class="signature"><strong>.levenshtein</strong>(s1 : String, s2 : String) : Int</a>
+        
+          <div class="summary"><p>Returns the min edit distance between two strings.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+
+
+<div class="methods-inherited">
+  
+</div>
+
+
+
+
+  <h2>Class Method Detail</h2>
+  
+    <div class="entry-detail" id="damerau_levenshtein(s1:String,s2:String):Int-class-method">
+      <div class="signature">
+        
+        def self.<strong>damerau_levenshtein</strong>(s1 : String, s2 : String) : Int
+
+        <a class="method-permalink" href="#damerau_levenshtein%28s1%3AString%2Cs2%3AString%29%3AInt-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>A variation of the Levenshtein distance, this counts transpositions as a single edit.</p>
+
+<pre><code class='language-crystal'><span class="t">StringMetrics</span>.damerau_levenshtein(<span class="s">&quot;char&quot;</span>, <span class="s">&quot;hcar&quot;</span>) <span class="o">==</span> <span class="n">1</span></code></pre>
+
+<p>as opposed to a distance of 2 from levenshtein on it's own</p>
+
+<p>Ported from <a href="https://github.com/jamesturk/jellyfish/blob/master/jellyfish/_jellyfish.py" target="_blank">here</a></p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mlobl/string-metrics/blob/c7cf5d71b4b6d37fc657381a7242553208354ade/src/string-metrics.cr#L59" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hamming(s1:String,s2:String):Int-class-method">
+      <div class="signature">
+        
+        def self.<strong>hamming</strong>(s1 : String, s2 : String) : Int
+
+        <a class="method-permalink" href="#hamming%28s1%3AString%2Cs2%3AString%29%3AInt-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns the number of substitutions that exist between two strings of equal length.
+Will raise an ArgumentError if both parameters aren't of the same length</p>
+
+<pre><code class='language-crystal'><span class="t">StringMetrics</span>.hamming(<span class="s">&quot;Micro&quot;</span>, <span class="s">&quot;Macro&quot;</span>) <span class="o">==</span> <span class="n">1</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mlobl/string-metrics/blob/c7cf5d71b4b6d37fc657381a7242553208354ade/src/string-metrics.cr#L47" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="jaro(s1:String,s2:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>jaro</strong>(s1 : String, s2 : String)
+
+        <a class="method-permalink" href="#jaro%28s1%3AString%2Cs2%3AString%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>A measure of similarity between two strings based on matching characters.
+Returns 0 if there is no similarity while 1 is an exact match</p>
+
+<pre><code class='language-crystal'><span class="t">StringMetrics</span>.jaro(<span class="s">&quot;MARTHA&quot;</span>, <span class="s">&quot;MARHTA&quot;</span>).round(<span class="n">2</span>) <span class="o">==</span> <span class="n">0.94</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mlobl/string-metrics/blob/c7cf5d71b4b6d37fc657381a7242553208354ade/src/string-metrics.cr#L169" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="jaro_winkler(s1:String,s2:String,scaling_factor=0.1)-class-method">
+      <div class="signature">
+        
+        def self.<strong>jaro_winkler</strong>(s1 : String, s2 : String, scaling_factor = <span class="n">0.1</span>)
+
+        <a class="method-permalink" href="#jaro_winkler%28s1%3AString%2Cs2%3AString%2Cscaling_factor%3D0.1%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Similar to regular Jaro, but gives a higher score for matching from the beginning
+of the string. Only change the scaling factor if you're intimate with the algorithm.</p>
+
+<pre><code class='language-crystal'><span class="t">StringMetrics</span>.jaro_winkler(<span class="s">&quot;MARTHA&quot;</span>, <span class="s">&quot;MARHTA&quot;</span>).round(<span class="n">2</span>) <span class="o">==</span> <span class="n">0.96</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mlobl/string-metrics/blob/c7cf5d71b4b6d37fc657381a7242553208354ade/src/string-metrics.cr#L178" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="levenshtein(s1:String,s2:String):Int-class-method">
+      <div class="signature">
+        
+        def self.<strong>levenshtein</strong>(s1 : String, s2 : String) : Int
+
+        <a class="method-permalink" href="#levenshtein%28s1%3AString%2Cs2%3AString%29%3AInt-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns the min edit distance between two strings. If the strings are exactly the same it will return 0,
+but if they differ it will return the minimum number of insertions, deletions, or substitutions to make them exactly the same.</p>
+
+<pre><code class='language-crystal'><span class="t">StringMetrics</span>.levenshtein(<span class="s">&quot;Car&quot;</span>, <span class="s">&quot;Char&quot;</span>) <span class="o">==</span> <span class="n">1</span></code></pre>
+
+<p>More detail can be found <a href="https://en.wikipedia.org/wiki/Levenshtein_distance" target="_blank">here</a>.</p>
+
+<p>Ported from <a href="https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python" target="_blank">here</a></p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/mlobl/string-metrics/blob/c7cf5d71b4b6d37fc657381a7242553208354ade/src/string-metrics.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+
+</div>
+
+</body>
+</html>

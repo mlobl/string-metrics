@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta id="repository-name" content="github.com/mlobl/string-metrics">
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="js/doc.js"></script>
+  <title>README - github.com/mlobl/string-metrics</title>
+</head>
+<body>
+
+<div id="types-list">
+  <div id="search-box">
+    <input type="search" id="search-input" placeholder="Search...">
+  </div>
+
+  <ul>
+    <li class="current"><a href="index.html">README</a></li>
+  </ul>
+
+  <ul>
+  
+  <li class=" " data-id="github.com/mlobl/string-metrics/StringMetrics" data-name="stringmetrics">
+      <a href="StringMetrics.html">StringMetrics</a>
+      
+    </li>
+  
+</ul>
+
+</div>
+
+<div id="main-content">
+<h1>string-metrics</h1>
+
+<p><a href="https://travis-ci.org/mlobl/string-metrics" target="_blank"><img src="https://travis-ci.org/mlobl/string-metrics.svg?branch=master" alt="Build Status"/></a></p>
+
+<p>String metric algorithms for Crystal:</p>
+
+<ul><li><a href="https://en.wikipedia.org/wiki/Levenshtein_distance" target="_blank">Levenshtein distance</a></li><li><a href="https://en.wikipedia.org/wiki/Hamming_distance" target="_blank">Hamming distance</a></li><li><a href="https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance" target="_blank">Damerau–Levenshtein distance</a></li><li><a href="https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance" target="_blank">Jaro(-Winkler) Distance</a></li></ul>
+
+<h2>Installation</h2>
+
+<p>Add this to your application's <code>shard.yml</code>:</p>
+
+<pre><code class='language-yaml'>dependencies:
+  string-metrics:
+    github: mlobl/string-metrics</code></pre>
+
+<h2>Usage</h2>
+
+<pre><code class='language-crystal'><span class="k">require</span> <span class="s">&quot;string-metrics&quot;</span>
+
+<span class="t">StringMetrics</span>.damerau_levenshtein(<span class="s">&quot;char&quot;</span>, <span class="s">&quot;hcar&quot;</span>) <span class="o">==</span> <span class="n">1</span>
+<span class="t">StringMetrics</span>.hamming(<span class="s">&quot;Micro&quot;</span>, <span class="s">&quot;Macro&quot;</span>) <span class="o">==</span> <span class="n">1</span>
+<span class="t">StringMetrics</span>.jaro(<span class="s">&quot;MARTHA&quot;</span>, <span class="s">&quot;MARHTA&quot;</span>).round(<span class="n">2</span>) <span class="o">==</span> <span class="n">0.94</span>
+<span class="t">StringMetrics</span>.jaro_winkler(<span class="s">&quot;MARTHA&quot;</span>, <span class="s">&quot;MARHTA&quot;</span>).round(<span class="n">2</span>) <span class="o">==</span> <span class="n">0.96</span>
+<span class="t">StringMetrics</span>.levenshtein(<span class="s">&quot;Car&quot;</span>, <span class="s">&quot;Char&quot;</span>) <span class="o">==</span> <span class="n">1</span></code></pre>
+
+<h2>Contributing</h2>
+
+<ol><li>Fork it ( https://github.com/mlobl/string-metrics/fork )</li><li>Create your feature branch (git checkout -b my-new-feature)</li><li>Commit your changes (git commit -am 'Add some feature')</li><li>Push to the branch (git push origin my-new-feature)</li><li>Create a new Pull Request</li></ol>
+
+<h2>Contributors</h2>
+
+<ul><li><a href="https://github.com/mlobl" target="_blank">mlobl</a> Meyer Lobl - creator, maintainer</li></ul>
+</div>
+</body>
+</html>
