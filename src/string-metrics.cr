@@ -8,7 +8,7 @@ module StringMetrics
   # StringMetrics.levenshtein("Car", "Char") == 1
   # ```
   # More detail can be found [here](https://en.wikipedia.org/wiki/Levenshtein_distance).
-  # 
+  #
   # Ported from [here](https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python)
   def self.levenshtein(s1 : String, s2 : String) : Int
     return levenshtein(s2, s1) if s1.size < s2.size
@@ -40,7 +40,7 @@ module StringMetrics
   end
 
   # Returns the number of substitutions that exist between two strings of equal length.
-  # Will raise an ArgumentError if both parameters aren't of the same length  
+  # Will raise an ArgumentError if both parameters aren't of the same length
   # ```crystal
   # StringMetrics.hamming("Micro", "Macro") == 1
   # ```
@@ -50,11 +50,11 @@ module StringMetrics
   end
 
   # A variation of the Levenshtein distance, this counts transpositions as a single edit.
-  # ```
+  # ```crystal
   # StringMetrics.damerau_levenshtein("char", "hcar") == 1
-  # ``` 
+  # ```
   # as opposed to a distance of 2 from levenshtein on it's own
-  # 
+  #
   # Ported from [here](https://github.com/jamesturk/jellyfish/blob/master/jellyfish/_jellyfish.py)
   def self.damerau_levenshtein(s1 : String, s2 : String) : Int
     infinite = s1.size + s2.size
@@ -164,7 +164,7 @@ module StringMetrics
   # A measure of similarity between two strings based on matching characters.
   # Returns 0 if there is no similarity while 1 is an exact match
   # ```crystal
-  #  StringMetrics.jaro("MARTHA", "MARHTA").round(2) == 0.94
+  # StringMetrics.jaro("MARTHA", "MARHTA").round(2) == 0.94
   # ```
   def self.jaro(s1 : String, s2 : String)
     reused_jaro_winkler(s1, s2, false)
