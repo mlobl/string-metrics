@@ -1,6 +1,6 @@
 # string-metrics
 
-String metrics and phonetic algorithms for Crystal:
+String metric algorithms for Crystal:
 * [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance)
 * [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance)
 * [Damerau–Levenshtein distance](https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance)
@@ -21,13 +21,14 @@ dependencies:
 
 ```crystal
 require "string-metrics"
+
+StringMetrics.damerau_levenshtein("char", "hcar") == 1
+StringMetrics.hamming("Micro", "Macro") == 1
+StringMetrics.jaro("MARTHA", "MARHTA").round(2) == 0.94
+StringMetrics.jaro_winkler("MARTHA", "MARHTA").round(2) == 0.96
+StringMetrics.levenshtein("Car", "Char") == 1
 ```
 
-TODO: Write usage instructions here
-
-## Development
-
-TODO: Write development instructions here
 
 ## Contributing
 
