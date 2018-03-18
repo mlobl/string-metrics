@@ -1,5 +1,31 @@
 require "./string-metrics/*"
 
+# Utility module for Tokenizing strings
+module StringTokenizers
+
+  # Gets you the ngrams of characters in string where *n* is the number of grams
+  # ```
+  # StringTokenizers.ngram_tokenizer("Quick", max_grams: 2) == ["Q", "Qu", "u", "ui", "i", "ic", "c", "ck", "k"] 
+  # ```
+  # Based off Elasticsearch NgramTokenizer [documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-ngram-tokenizer.html)
+  def self.ngram_tokenizer(s : String, min_gram = 1, max_gram = 2)
+    hits = ngram_tokenizer(s.chars, min_gram: min_gram, max_gram: max_gram)
+    hits.map { |x| x.join("") }
+  end
+
+  # same as the the string overload except with char arrays
+  def self.ngram_tokenizer(s : Array(Char), min_gram = 1, max_gram = 2)
+    result = [] of Array(Char)
+    ssize = s.size
+    (0...ssize).each do |i|
+      (min_gram..max_gram).each do |j|
+        result << s[i...i+j] if i + j <= ssize 
+      end
+    end
+    result
+  end
+end
+
 # A module containing a collection of well known string metric algorithms
 module StringMetrics
   # Returns the min edit distance between two strings. If the strings are exactly the same it will return 0,
@@ -178,4 +204,15 @@ module StringMetrics
   def self.jaro_winkler(s1 : String, s2 : String, scaling_factor = 0.1)
     reused_jaro_winkler(s1, s2, scaling_factor: scaling_factor)
   end
+  
+  # Returns the Jaccard similarity coefficient for two arrays
+  # TODO: Overload sets and figure out generics 
+  def self.jaccard(arr1 : Array(Char), arr2 : Array(Char))
+    (arr1&arr2).size.fdiv (arr1|arr2).size
+  end
+  
+  def self.jaccard(s1 : String, s2 : String)
+    jaccard(s1.chars, s2.chars)
+  end
+
 end

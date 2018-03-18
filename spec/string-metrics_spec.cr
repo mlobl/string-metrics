@@ -84,4 +84,19 @@ describe "StringMetrics" do
   it "jaro winkler both empty" do
     StringMetrics.jaro_winkler("", "").should eq(1)
   end
+
+  it "jaccard index same letters" do
+    StringMetrics.jaccard("char", "hcar").should eq(1.0)
+  end
+
+ it "jaccard index diff" do
+    StringMetrics.jaccard("char", "car").should eq(0.75)
+  end
+ 
+end
+
+describe "StringTokenizers" do 
+  it "basic ngram" do 
+    StringTokenizers.ngram_tokenizer("Quick Fox", max_gram: 2).should eq([ "Q", "Qu", "u", "ui", "i", "ic", "c", "ck", "k", "k ", " ", " F", "F", "Fo", "o", "ox", "x" ])
+  end
 end
